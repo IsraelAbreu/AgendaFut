@@ -25,4 +25,15 @@ public class ClienteController {
     public ResponseEntity<List<Cliente>> exibirClientes(){
         return ResponseEntity.ok(clienteService.listarClientes());
     }
+
+    @GetMapping("localizaCliente")
+    public ResponseEntity<Cliente> getCliente(@RequestParam("email") String email){
+        return ResponseEntity.ok(clienteService.localizaCliente(email));
+    }
+
+    @DeleteMapping({"/{email}"})
+    public ResponseEntity<Void> excluirCliente(@PathVariable String email){
+        clienteService.deletaCliente(email);
+        return ResponseEntity.ok().build();
+    }
 }

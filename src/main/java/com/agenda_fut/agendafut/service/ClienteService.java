@@ -1,8 +1,6 @@
 package com.agenda_fut.agendafut.service;
 
-import com.agenda_fut.agendafut.dto.ClienteDTO;
 import com.agenda_fut.agendafut.entity.Cliente;
-import com.agenda_fut.agendafut.entity.Telefones;
 import com.agenda_fut.agendafut.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,5 +22,13 @@ public class ClienteService {
 
     public List<Cliente> listarClientes(){
         return clienteRepository.findAll();
+    }
+
+    public Cliente localizaCliente(String email){
+        return clienteRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+    }
+
+    public void deletaCliente(String email){
+        clienteRepository.deleteByEmail(email);
     }
 }
