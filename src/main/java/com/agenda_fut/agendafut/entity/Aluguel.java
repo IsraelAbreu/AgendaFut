@@ -25,10 +25,10 @@ public class Aluguel {
     private LocalDate data;
 
     @Column(nullable = false)
-    private LocalTime horarioInicio;
+    private LocalTime horaInicio;
 
     @Column(nullable = false)
-    private LocalTime horarioFim;
+    private LocalTime horaFim;
 
     @Column(nullable = false)
     private BigDecimal valor;
