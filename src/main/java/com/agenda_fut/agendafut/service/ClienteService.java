@@ -16,6 +16,7 @@ public class ClienteService {
     public Cliente salvarCliente(Cliente cliente){
         try{
             verificaSeEmailJaCadastrado(cliente.getEmail()); //Se aqui for TRUE já estoura a ConflictException na função verificaSeEmailJaCadastrado + RuntimeException do Catch
+            verificaSeCpfJaCadastrado(cliente.getCpf());
             return clienteRepository.save(cliente);
         } catch (RuntimeException e){
             throw new RuntimeException("Erro ao finalizar o cadastro do cliente! " + e.getMessage());
@@ -40,12 +41,27 @@ public class ClienteService {
 
     public void verificaSeEmailJaCadastrado(String email){
         try {
-            boolean clienteCadastrado = verificaSeEmailExiste(email);
-            if (clienteCadastrado){
+            boolean emailCadastrado = verificaSeEmailExiste(email);
+            if (emailCadastrado){
                 throw new ConflictException("Este e-mail já está cadastrado");
             }
         } catch (ConflictException e){
             throw new ConflictException("Este e-mail já está cadastrado");
+        }
+    }
+
+    public boolean verificaSeCpfExiste(String cpf){
+        return clienteRepository.existsByCpf(cpf);
+    }
+
+    public void verificaSeCpfJaCadastrado(String cpf){
+        try{
+            boolean cpfCadastrado = verificaSeCpfExiste(cpf);
+            if (cpfCadastrado){
+                throw new ConflictException("Este CPF já está cadastrado");
+            }
+        } catch (ConflictException e){
+            throw new ConflictException("Este CPF já está cadastrado");
         }
     }
 }
