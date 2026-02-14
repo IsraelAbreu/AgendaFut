@@ -1,6 +1,7 @@
 package com.agenda_fut.agendafut.service;
 
 import com.agenda_fut.agendafut.entity.Cliente;
+import com.agenda_fut.agendafut.exceptions.ConflictException;
 import com.agenda_fut.agendafut.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,10 @@ public class ClienteService {
 
     public Cliente salvarCliente(Cliente cliente){
         try{
+            verificaSeEmailJaCadastrado(cliente.getEmail()); //Se aqui for TRUE já estoura a ConflictException na função verificaSeEmailJaCadastrado + RuntimeException do Catch
             return clienteRepository.save(cliente);
         } catch (RuntimeException e){
-            throw new RuntimeException("Ocorreu um erro ao cadastro o cliente"+ e.getCause());
+            throw new RuntimeException("Erro ao finalizar o cadastro do cliente! " + e.getMessage());
         }
     }
 
@@ -30,5 +32,20 @@ public class ClienteService {
 
     public void deletaCliente(String email){
         clienteRepository.deleteByEmail(email);
+    }
+
+    public boolean verificaSeEmailExiste(String email){
+        return clienteRepository.existsByEmail(email);
+    }
+
+    public void verificaSeEmailJaCadastrado(String email){
+        try {
+            boolean clienteCadastrado = verificaSeEmailExiste(email);
+            if (clienteCadastrado){
+                throw new ConflictException("Este e-mail já está cadastrado");
+            }
+        } catch (ConflictException e){
+            throw new ConflictException("Este e-mail já está cadastrado");
+        }
     }
 }
