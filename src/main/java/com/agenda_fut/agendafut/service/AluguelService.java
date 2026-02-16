@@ -23,4 +23,7 @@ public class AluguelService {
     public List<Aluguel> consultarHorarioAlugados(){
         return aluguelRepository.findAll();
     }
+
+    //criar validação de horário horario fim > hora inicio
+
 }
