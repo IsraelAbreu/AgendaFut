@@ -21,11 +21,16 @@ public class AluguelService {
                 throw new ConflictException("O horário de fim deve ser maior que o horário de inicio");
             }
 
-            boolean horarioOcupado = verificaSeHorarioOcupado(aluguel);
+            List<Aluguel> conflitos = aluguelRepository.buscarConflitos(
+                    aluguel.getData(),
+                    aluguel.getHoraInicio(),
+                    aluguel.getHoraFim()
+            );
 
-            if (horarioOcupado){
-                throw new ConflictException("O Horário escolhido já está ocupado");
+            if (!conflitos.isEmpty()) {
+                throw new ConflictException("O horário selecionado já está ocupado");
             }
+
 
             //definindo um valor fixo por hora
             aluguel.setValor(BigDecimal.valueOf(120));
@@ -41,12 +46,5 @@ public class AluguelService {
         return aluguelRepository.findAll();
     }
 
-    public boolean verificaSeHorarioOcupado(Aluguel aluguel){
-        return aluguelRepository.existsByDataAndHoraInicioLessThanAndHoraFimGreaterThan(
-                    aluguel.getData(),
-                    aluguel.getHoraInicio(),
-                    aluguel.getHoraFim()
-        );
-    }
 
 }

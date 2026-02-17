@@ -21,13 +21,13 @@ public class Aluguel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "data", nullable = false)
     private LocalDate data;
 
-    @Column(nullable = false)
+    @Column(name = "hora_inicio", nullable = false)
     private LocalTime horaInicio;
 
-    @Column(nullable = false)
+    @Column(name = "hora_fim", nullable = false)
     private LocalTime horaFim;
 
     @Column(nullable = false)
