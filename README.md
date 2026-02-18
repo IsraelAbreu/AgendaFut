@@ -127,5 +127,4 @@ Criar uma API REST para:
 ------------------------------------------------------------------------
 
 # 🧑‍💻 Autor
-Israel Abreu de Oliveira
-Desenvolvido como projeto de estudo focado em backend com Spring Boot.
+- Desenvolvedor: Israel Abreu de Oliveira
